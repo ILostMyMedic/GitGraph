@@ -20,28 +20,21 @@ const data = {
 
 fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(data, null, 2));
 
-git.add('./*')
-    .commit('random string added')
-    .push('origin', 'hotfix', () => {
-        console.log('pushed to hotfix branch');
-    });
+// base url for repo is origin 
+const baseUrl = 'https://github.com/ILostMyMedic/GitGraph.git'
 
-git.pull('origin', 'main', () => {
-    console.log('pulled from main branch');
-});
+// create a new branch called "hotfix"
+git.checkoutLocalBranch('hotfix');
 
-git.checkout('main', () => {
-    console.log('checked out to main branch');
-});
+// add changes to "hotfix" branch
+git.add('./*');
 
-git.mergeFromTo('hotfix', 'main', () => {
-    console.log('merged hotfix branch to main branch');
-});
+// commit changes to "hotfix" branch
+git.commit('hotfix');
 
-git.push('origin', 'main', () => {
-    console.log('pushed to main branch');
-});
+// push changes to "hotfix" branch
+git.push(baseUrl, 'hotfix');
 
-git.checkout('hotfix', () => {
-    console.log('checked out to hotfix branch');
-});
+// create a pull request to merge "hotfix" branch to "main" branch
+git.pull(baseUrl, 'main');
+
