@@ -30,8 +30,8 @@ const GitGraph = async () => {
 
         // create a pull request from hotfix to main
         const { data } = await octokit.pulls.create({
-            owner: 'joshuamabina',
-            repo: 'git-graph',
+            owner: 'ILostMyMedic',
+            repo: 'GitGraph',
             title: randomString,
             head: 'hotfix',
             base: 'main',
@@ -39,8 +39,8 @@ const GitGraph = async () => {
 
         // merge pull request
         await octokit.pulls.merge({
-            owner: 'joshuamabina',
-            repo: 'git-graph',
+            owner: 'ILostMyMedic',
+            repo: 'GitGraph',
             pull_number: data.number,
         });
 
