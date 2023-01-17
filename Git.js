@@ -2,9 +2,21 @@ const fs = require('fs');
 const file = require('./data.json');
 const simpleGit = require('simple-git');
 const git = simpleGit.default();
+const { Octokit } = require("@octokit/core");
+
 
 const GitGraph = async () => {
     try {
+        // onfiguration for octokit
+        const octokit = new Octokit({
+            auth: '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',
+        });
+        const {
+            data: { login },
+        } = await octokit.request('GET /user');
+        console.log("Hello, %s", login);
+        
+        
         
         // use fs to write a random 64 character string to a file.json 
         // this will be used as the commit message
@@ -16,10 +28,21 @@ const GitGraph = async () => {
         await git.commit(randomString);
         await git.push('origin', 'hotfix');
 
-        // merge hotfix branch into master
-        await git.checkout('main');
-        await git.mergeFromTo('hotfix', 'main');
-        await git.push('origin', 'main');
+        // create a pull request from hotfix to main
+        const { data } = await octokit.pulls.create({
+            owner: 'joshuamabina',
+            repo: 'git-graph',
+            title: randomString,
+            head: 'hotfix',
+            base: 'main',
+        });
+
+        // merge pull request
+        await octokit.pulls.merge({
+            owner: 'joshuamabina',
+            repo: 'git-graph',
+            pull_number: data.number,
+        });
 
     } catch (e) {
         console.log(e);
