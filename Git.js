@@ -1,5 +1,4 @@
 const fs = require('fs');
-const file = require('./data.json');
 const simpleGit = require('simple-git');
 const git = simpleGit.default();
 
@@ -16,6 +15,7 @@ const GitGraph = async () => {
         await git.commit(randomString);
         await git.push('origin', 'hotfix');
 
+        console.log(`${randomString} pushed to hotfix branch`)
         
 
     } catch (e) {
