@@ -1,23 +1,25 @@
+const fs = require('fs');
+const file = require('./data.json');
 const simpleGit = require('simple-git');
 const git = simpleGit.default();
 
 const GitGraph = async () => {
     try {
         
-        // create a new commit to hotfix branch
-        await git.checkout('hotfix');
-        await git.commit('hotfix commit', ['--allow-empty']);
+        // use fs to write a random 64 character string to a file.json 
+        // this will be used as the commit message
+        const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        fs.writeFileSync('./data.json', JSON.stringify({ randomString }));
+        
+        // push change to hotfix branch
+        await git.add('./*');
+        await git.commit(randomString);
         await git.push('origin', 'hotfix');
 
-        // create a pull request from hotfix to main
-        await git.checkout('main');
-        await git.pull('origin', 'main');
-        await git.mergeFromTo('hotfix', 'main');
-        await git.push('origin', 'main');
-
-        
-        
-
+        // merge hotfix branch into master
+        await git.checkout('master');
+        await git.mergeFromTo('hotfix', 'master');
+        await git.push('origin', 'master');
 
     } catch (e) {
         console.log(e);
