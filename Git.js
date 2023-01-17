@@ -17,9 +17,9 @@ const GitGraph = async () => {
         await git.push('origin', 'hotfix');
 
         // merge hotfix branch into master
-        await git.checkout('master');
-        await git.mergeFromTo('hotfix', 'master');
-        await git.push('origin', 'master');
+        await git.checkout('main');
+        await git.mergeFromTo('hotfix', 'main');
+        await git.push('origin', 'main');
 
     } catch (e) {
         console.log(e);
