@@ -1,6 +1,6 @@
 
 # GitGraph
-<img src="./assets/header.png" >
+<img src="https://raw.githubusercontent.com/ILostMyMedic/GitGraph/main/assets/Header.PNG?token=GHSAT0AAAAAABVYF7FF7OG4XZNNOJFB5SFIY6JWKZQ" />
 
 GitGraph is a prof of concept that shows why Github statistics are not reliable. It is a tool that allows you to commit back in time to `cheat` your Github statistics.
 
